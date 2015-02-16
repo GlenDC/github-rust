@@ -2,4 +2,10 @@
 
 name = "github"
 version = "0.0.1"
+description = "A Rust GitHub v3 API client."
+readme = "README.md"
+documentation = "https://github.com/GlenDC/github-rust"
+repository = "https://github.com/GlenDC/github-rust"
+license = "MIT"
 authors = ["glendc <decauwsemaecker.glen@gmail.com>"]
+keywords = ["github", "api", "v3"]

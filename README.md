@@ -1,13 +1,23 @@
-# Github V3 API
+# Rust's GitHub v3 API
 
-A Rust GitHub v3 API client.
+A Rust library to communicate with GitHub via the official v3 REST API.
 
-## Note
+## Issues
 
-The first public code will be uploaded soon. This repository is already made to tell about its existence and let people know they can help out in case they are interested in this project.
+Feel free to submit issues and enhancement requests.
 
-In the meanwhile if you are interested in contributing and helping to realize the first GitHub API for Rust, then please contact me via mail at [contact@glendc.com](mailto:contact@glendc.com).
+## Contributing
+
+I follow the _fork-and-pull_ git workflow:
+
+1. Fork the repo on GitHub
+1. Commit changes to a branch in your fork
+1. Make sure to pull the latest changes (rebase when possible) if not done yet!
+  1. If you have conflicts, you should merge them, but try to prevent where possible!
+1. Pull request "upstream" with your changes
+
+You can contribute by fix things wherever they bother you, resolve an open issue or add exesting features. Not sure how you can contribute? [Contact me ](mailto:contact@glendc.com) and we'll find something :)
 
 ## License
 
-[MIT](./LICENSE)
+This repository and all its content falls under [the MIT license](./LICENSE).

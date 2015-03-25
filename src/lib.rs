@@ -17,6 +17,12 @@ pub struct Client<C: HttpClient> {
     pub http_client: C,
 }
 
+impl Client<HyperClient> {
+    pub fn new_default(user: &str) -> Client<HyperClient> {
+        Client::new(user, Some(HyperClient::new()))
+    }
+}
+
 impl<C: HttpClient> Client<C> {
     pub fn new(user: &str, client: Option<C>) -> Client<C> {
         Client {
@@ -25,5 +31,9 @@ impl<C: HttpClient> Client<C> {
             upload_url: String::from_str(UPLOAD_BASE_URL),
             http_client: client.unwrap_or_else(|| C::new()),
         }
+    }
+
+    pub fn hello(&self) {
+        println!("Hello I am, {}.", self.user_agent);
     }
 }

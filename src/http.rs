@@ -1,6 +1,12 @@
 use hyper::Client;
 use hyper::header::UserAgent;
 
+/*
+use hyper::header::Connection;
+use hyper::header::ConnectionOption;
+use std::io::{self, Read, BufReader};
+*/
+
 pub trait HttpClient {
     fn new() -> Self;
     fn get(&self, user: &str, url: &str);
@@ -21,12 +27,20 @@ impl HttpClient for HyperClient {
     fn get(&self, user: &str, url: &str) {
         let mut client = Client::new();
 
-        let res = match client.get(url).header(UserAgent(String::from_str(user))).send() {
+        let res = match client.get(url)
+            //.header(Connection(vec![ConnectionOption::Close]))
+            .header(UserAgent(String::from_str(user))).send() {
             Ok(res) => res,
             Err(err) => panic!("Failed to connect: {:?}", err)
         };
 
         println!("Response: {}", res.status);
         println!("Headers:\n{}", res.headers);
+
+        /*
+        let mut body = String::new();
+        res.read_to_string(&mut body).unwrap();
+        println!("Body:\n{}", body);
+        */
     }
 }

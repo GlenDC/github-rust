@@ -3,6 +3,7 @@
 extern crate hyper;
 
 pub mod http;
+pub mod activity;
 
 use http::HttpClient;
 use http::HyperClient;
@@ -26,9 +27,9 @@ impl Client<HyperClient> {
 impl<C: HttpClient> Client<C> {
     pub fn new(user: &str, client: Option<C>) -> Client<C> {
         Client {
-            user_agent: String::from_str(user),
-            base_url: String::from_str(DEFAULT_BASE_URL),
-            upload_url: String::from_str(UPLOAD_BASE_URL),
+            user_agent: user.to_string(),
+            base_url: DEFAULT_BASE_URL.to_string(),
+            upload_url: UPLOAD_BASE_URL.to_string(),
             http_client: client.unwrap_or_else(|| C::new()),
         }
     }

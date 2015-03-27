@@ -1,31 +1,35 @@
-#![feature(collections)]
+extern crate curl;
+extern crate chrono;
 
-extern crate hyper;
+extern crate rustc_serialize;
 
 pub mod http;
 pub mod activity;
 
 use http::HttpClient;
-use http::HyperClient;
+use http::CurlClient;
 
 static DEFAULT_BASE_URL: &'static str = "https://api.github.com/";
 static UPLOAD_BASE_URL: &'static str = "https://uploads.github.com/";
 
+pub static API_ACCEPT_HEADER: &'static str = "application/vnd.github.v3+json";
+
 pub struct Client<C: HttpClient> {
-    pub user_agent: String,
     pub base_url: String,
     pub upload_url: String,
     pub http_client: C,
+
+    user_agent: String,
 }
 
-impl Client<HyperClient> {
-    pub fn new_default(user: &str) -> Client<HyperClient> {
-        Client::new(user, Some(HyperClient::new()))
+impl Client<CurlClient> {
+    pub fn new(user: &str) -> Client<CurlClient> {
+        Client::new_custom(user, Some(CurlClient::new()))
     }
 }
 
 impl<C: HttpClient> Client<C> {
-    pub fn new(user: &str, client: Option<C>) -> Client<C> {
+    pub fn new_custom(user: &str, client: Option<C>) -> Client<C> {
         Client {
             user_agent: user.to_string(),
             base_url: DEFAULT_BASE_URL.to_string(),

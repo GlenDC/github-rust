@@ -11,5 +11,6 @@ authors = ["glendc <decauwsemaecker.glen@gmail.com>"]
 keywords = ["github", "api", "v3"]
 
 [dependencies]
-hyper = "*"
-unicase = "*"
+curl = "0.2"
+rustc-serialize = "0.3"
+chrono = "0.2"

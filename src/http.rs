@@ -1,46 +1,43 @@
-use hyper::Client;
-use hyper::header::UserAgent;
+use curl::http;
+use rustc_serialize::json;
+use rustc_serialize::Decodable;
+use std::str;
 
-/*
-use hyper::header::Connection;
-use hyper::header::ConnectionOption;
-use std::io::{self, Read, BufReader};
-*/
+use API_ACCEPT_HEADER;
 
 pub trait HttpClient {
     fn new() -> Self;
-    fn get(&self, user: &str, url: &str);
+    fn get<ResponseType: Decodable>(&self, user: &str, url: &str) -> (Vec<ResponseType>, u32);
 }
 
-pub struct HyperClient;
+pub struct CurlClient;
 
-impl HttpClient for HyperClient {
-    fn new() -> HyperClient {
-        HyperClient
+impl HttpClient for CurlClient {
+    fn new() -> CurlClient {
+        CurlClient
     }
 
     // todo:
-    // + check if we want to replace url with a proper object that
-    //   handles invalid urls, etc;
-    // + support (header)option list;
+    // + return header decoded
+    // + handle custom header parameters
     
-    fn get(&self, user: &str, url: &str) {
-        let mut client = Client::new();
+    fn get<ResponseType: Decodable>(&self, user: &str, url: &str) -> (Vec<ResponseType>, u32) {
+        let response = http::handle()
+            .get(url)
+            .header("User-Agent", user)
+            .header("Accept", API_ACCEPT_HEADER)
+            .exec().unwrap();
 
-        let res = match client.get(url)
-            //.header(Connection(vec![ConnectionOption::Close]))
-            .header(UserAgent(String::from_str(user))).send() {
-            Ok(res) => res,
-            Err(err) => panic!("Failed to connect: {:?}", err)
+        let raw_body = match str::from_utf8(response.get_body()) {
+            Ok(b) => b,
+            Err(e) => panic!("Error parsing response body: {:?}", e),
         };
 
-        println!("Response: {}", res.status);
-        println!("Headers:\n{}", res.headers);
+        let body: Vec<ResponseType> = match json::decode(raw_body) {
+            Ok(b) => b,
+            Err(e) => panic!("Error parsing raw body: {:?}", e),
+        };
 
-        /*
-        let mut body = String::new();
-        res.read_to_string(&mut body).unwrap();
-        println!("Body:\n{}", body);
-        */
+        (body, response.get_code())
     }
 }

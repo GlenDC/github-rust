@@ -28,7 +28,7 @@ pub struct Organisation {
 }
 
 #[derive(RustcDecodable, RustcEncodable)]
-pub struct EventResponse  {
+pub struct EventResponse {
     pub public: bool,
     pub repo: Repository,
     pub actor: Actor,

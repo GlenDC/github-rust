@@ -1,34 +1,49 @@
 use rustc_serialize::json;
+use rustc_serialize::Decoder;
+use rustc_serialize::Decodable;
 
 use std::str;
 use std::fmt;
 
 /// TODO: documentation
 /// https://developer.github.com/v3/#client-errors
-/*
+
 pub enum ErrorCode {
     Missing,
     MissingField,
     Invalid,
     AlreadyExists,
-    String,
+    Unknown(String),
 }
 
-impl<D: Decodable::Decoder> Decodable<D> for ErrorCode {
-    pub fn decode(d: &mut json::Decoder) -> Result<ErrorCode, Error> {
+impl fmt::Display for ErrorCode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let msg: String = String::from_str(match *self {
+            ErrorCode::Missing => "resource does not exist",
+            ErrorCode::MissingField => "required field on the resource has not been set",
+            ErrorCode::Invalid => "the formatting of the field is invalid",
+            ErrorCode::AlreadyExists => "another resource has the same value as this field",
+            ErrorCode::Unknown(ref msg) => &msg,
+        });
+
+        write!(f, "{}", msg)
+    }
+}
+
+impl Decodable for ErrorCode {
+    fn decode<D: Decoder>(d: &mut D) -> Result<ErrorCode, D::Error> {
         match d.read_str() {
-            Ok(code) => match code {
-                "missing" => Ok(ErrorCode::Missing),
-                "missing_field" => Ok(ErrorCode::MissingField),
-                "invalid" => Ok(ErrorCode::Invalid),
-                "already_exists" => Ok(ErrorCode::AlreadyExists),
-                unknown => Ok(unknown),
-            },
-            err => err,
+            Ok(code) => Ok(match &*code {
+                "missing" => ErrorCode::Missing,
+                "missing_field" => ErrorCode::MissingField,
+                "invalid" => ErrorCode::Invalid,
+                "already_exists" => ErrorCode::AlreadyExists,
+                unknown => ErrorCode::Unknown(String::from_str(unknown)),
+            }),
+            Err(err) => Err(err),
         }
     }
 }
-*/
 
 const STATUS_OK: u32 = 200;
 const STATUS_BAD_REQUEST: u32 = 400;
@@ -39,7 +54,13 @@ const STATUS_UNPROCCESSABLE_ENTITY: u32 = 422;
 pub struct ErrorContext {
     pub resource: String,
     pub field: String,
-    pub code: String,
+    pub code: ErrorCode,
+}
+
+impl fmt::Display for ErrorContext {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Error found in {}.{}: {}", self.resource, self.field, self.code)
+    }
 }
 
 pub enum ErrorStatus{

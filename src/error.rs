@@ -35,14 +35,13 @@ const STATUS_BAD_REQUEST: u32 = 400;
 const STATUS_FORBIDDEN: u32 = 403;
 const STATUS_UNPROCCESSABLE_ENTITY: u32 = 422;
 
-#[derive(RustcDecodable, Debug)]
+#[derive(RustcDecodable)]
 pub struct ErrorContext {
     pub resource: String,
     pub field: String,
     pub code: String,
 }
 
-#[derive(Debug)]
 pub enum ErrorStatus{
     BadRequest,
     UnprocessableEntity,
@@ -74,7 +73,6 @@ impl ErrorStatus {
     }
 }
 
-#[derive(Debug)]
 pub struct RequestError {
     pub code: ErrorStatus,
     pub errors: Vec<ErrorContext>,
@@ -94,11 +92,10 @@ impl RequestError {
 
 impl fmt::Display for RequestError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "HTTP Error: {}. Found {} error(s)!", self.code, self.errors.len())
+        write!(f, "HTTP Error: {}. Found {} error description(s)!", self.code, self.errors.len())
     }
 }
 
-#[derive(Debug)]
 pub struct InternalError {
     pub msg: String,
 }
@@ -111,14 +108,22 @@ impl InternalError {
 
 impl fmt::Display for InternalError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       write!(f, "Internal Error: {}", self.msg)
+        write!(f, "Internal Error: {}", self.msg)
     }
 }
 
-#[derive(Debug)]
 pub enum ClientError {
     Http(RequestError),
     Internal(InternalError)
+}
+
+impl fmt::Display for ClientError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            &ClientError::Http(ref e) => write!(f, "{}", e),
+            &ClientError::Internal(ref e) => write!(f, "{}", e),
+        }
+    }
 }
 
 pub fn check_status_code(code: u32) -> bool {

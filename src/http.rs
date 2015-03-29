@@ -12,9 +12,8 @@ static API_ACCEPT_HEADER: &'static str = "application/vnd.github.v3+json";
 
 pub fn get<R: Decodable>(user: &str, url: &str, opts: Option<Vec<(&str, &str)>>) -> Result<(Vec<R>, Response), ClientError> {
     let mut handle = curl_http::handle();
-    let mut request = handle.get(url);
-    request = request.header("User-Agent", user)
-        .header("Accept", API_ACCEPT_HEADER);
+    let mut request = handle.get(url)
+        .header("User-Agent", user).header("Accept", API_ACCEPT_HEADER);
 
     if opts.is_some() {
         for (name, val) in opts.unwrap() {

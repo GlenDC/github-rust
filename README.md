@@ -16,7 +16,7 @@ I follow the _fork-and-pull_ git workflow for code contributions:
   1. If you have conflicts, you should merge them, but try to prevent where possible!
 1. Pull request "upstream" with your changes
 
-You can contribute by fix things wherever they bother you, resolve an open issue or add new features. In case you can't help with code due to skill-, time- or energy-limitations, but you do have suggestions or errors to report, than feel free to open an issue.
+You can contribute by improving code, resolve an open issue or add a new feature. In case you can't help with code due to skill-, time- or energy-limitations, but you do have suggestions or errors to report, than feel free to open an issue.
 
 Still not sure how you can contribute? [Contact me ](mailto:contact@glendc.com) and we'll find something :)
 

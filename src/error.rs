@@ -1,4 +1,3 @@
-use rustc_serialize::Decodable;
 use rustc_serialize::json;
 
 use std::str;
@@ -30,43 +29,52 @@ impl<D: Decodable::Decoder> Decodable<D> for ErrorCode {
 }
 */
 
+const STATUS_OK: u32 = 200;
+const STATUS_BAD_REQUEST: u32 = 400;
+const STATUS_FORBIDDEN: u32 = 403;
+const STATUS_UNPROCCESSABLE_ENTITY: u32 = 422;
+
 #[derive(RustcDecodable)]
+#[allow(dead_code)]
 pub struct ErrorContext {
-    resource: String,
-    field: String,
-    code: String,
+    pub resource: String,
+    pub field: String,
+    pub code: String,
 }
 
-pub enum ErrorType {
+pub enum ErrorStatus{
     BadRequest,
     UnprocessableEntity,
     Forbidden,
     Unknown(u32),
 }
 
+impl ErrorStatus {
+    pub fn new(code: u32) -> ErrorStatus {
+        match code {
+            STATUS_BAD_REQUEST => ErrorStatus::BadRequest,
+            STATUS_FORBIDDEN => ErrorStatus::Forbidden,
+            STATUS_UNPROCCESSABLE_ENTITY => ErrorStatus::UnprocessableEntity,
+            unknown => ErrorStatus::Unknown(unknown),
+        }
+    }
+}
+
+#[allow(dead_code)]
 pub struct RequestError {
-    code: ErrorType,
-    errors: Vec<ErrorContext>,
+    pub code: ErrorStatus,
+    pub errors: Vec<ErrorContext>,
 }
 
 impl RequestError {
-    pub fn new(code: u32, buffer: &[u8]) -> RequestError {
-        RequestError {
-            code: match code {
-                400 => ErrorType::BadRequest,
-                403 => ErrorType::Forbidden,
-                422 => ErrorType::UnprocessableEntity,
-                unknown => ErrorType::Unknown(unknown),
-            },
+    pub fn new<T>(code: u32, buffer: &[u8]) -> Result<T, ClientError> {
+        Err(ClientError::HttpError(RequestError {
+            code: ErrorStatus::new(code),
             errors: match str::from_utf8(buffer) {
                 Err(..) => Vec::new(),
                 Ok(body) => json::decode(body).unwrap_or(Vec::new()),
             },
-        }
-    }
-
-    pub fn get_error<T>(code: u32, buffer: &[u8]) -> Result<T, ClientError> {
-        Err(ClientError::HttpError(RequestError::new(code, buffer)))
+        }))
     }
 }
 
@@ -75,8 +83,8 @@ pub enum ClientError {
     InternalError(String)
 }
 
-pub fn is_ok(code: u32) -> bool {
-    code == 200
+pub fn check_status_code(code: u32) -> bool {
+    code == STATUS_OK
 }
 
 pub fn get_internal_error<T>(message: &str) -> Result<T, ClientError> {

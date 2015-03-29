@@ -1,20 +1,23 @@
-#![deny(warnings)]
+//#![deny(warnings)]
 
 extern crate github;
 
 use github::Client;
-use github::activity;
+use github::activity::events::*;
 
 fn main() {
-    let client = &mut Client::new("?");
-    client.hello();
-
-    println!("Listing all repo events for glendc/github-rust:");
-    let (repo_list_resp, _) = activity::events::list_repos(client, "glendc", "github-rust");
-    for resp in repo_list_resp {
-        println!("Event #{} @ '{}' by actor {};",
-            resp.id, resp.created_at, resp.actor.login);
+    let client = &Client::new("glendc");
+    match list_events(client) {
+        Ok((events, resp)) => {
+            println!("listing public events succesfull, we have {} requsts remaining of {}. Limit resets @ {}...",
+                resp.rate.remaining, resp.rate.limit, resp.rate.reset);
+            for event in events {
+                println!("event #{} at {} by {}...",
+                    event.id, event.created_at, event.actor.login);
+            }
+        }
+        Err(e) => {
+            println!("Error...");
+        }
     }
-    println!("We have {} unauthed requests remaining, resets on {}.",
-        client.x_rate_limit.get_remaining(), client.x_rate_limit.get_reset())
 }

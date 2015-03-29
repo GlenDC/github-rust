@@ -1,6 +1,5 @@
-//use chrono::*;
-
-pub mod events;
+use error::*;
+use response::Response;
 
 #[derive(RustcDecodable, RustcEncodable)]
 pub struct Repository {
@@ -37,3 +36,7 @@ pub struct EventResponse {
     pub created_at: String,
     pub id: String,
 }
+
+pub type EventReturnType = Result<(Vec<EventResponse>, Response), ClientError>;
+
+pub mod events;

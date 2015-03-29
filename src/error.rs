@@ -210,8 +210,7 @@ impl fmt::Display for ClientError {
 
 /// Simplistic function internally used to check
 /// if a returned status code is positive.
-/// When we say a status code is positivie, we
-/// mean that the request was succesful.
+/// Which means that the request was succesful.
 pub fn check_status_code(code: u32) -> bool {
     code == STATUS_OK
 }

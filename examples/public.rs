@@ -3,6 +3,7 @@
 extern crate github;
 
 use github::Client;
+use github::error::*;
 use github::activity::events::*;
 
 fn main() {
@@ -16,8 +17,13 @@ fn main() {
                     event.id, event.created_at, event.actor.login);
             }
         }
-        Err(e) => {
-            println!("list_events => {}", e);
+        Err(err) => {
+            println!("list_events => {}", err);
+            if let ClientError::Http(http_error) = err {
+                for error in http_error.errors {
+                    println!("    {}", error);;
+                }
+            }
         }
     }
 }

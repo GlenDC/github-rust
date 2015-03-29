@@ -17,7 +17,7 @@ fn main() {
             }
         }
         Err(e) => {
-            println!("Error...");
+            println!("list_events => {:?}", e);
         }
     }
 }

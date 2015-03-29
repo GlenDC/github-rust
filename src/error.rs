@@ -1,6 +1,7 @@
 use rustc_serialize::json;
 
 use std::str;
+use std::fmt;
 
 /// TODO: documentation
 /// https://developer.github.com/v3/#client-errors
@@ -34,19 +35,32 @@ const STATUS_BAD_REQUEST: u32 = 400;
 const STATUS_FORBIDDEN: u32 = 403;
 const STATUS_UNPROCCESSABLE_ENTITY: u32 = 422;
 
-#[derive(RustcDecodable)]
-#[allow(dead_code)]
+#[derive(RustcDecodable, Debug)]
 pub struct ErrorContext {
     pub resource: String,
     pub field: String,
     pub code: String,
 }
 
+#[derive(Debug)]
 pub enum ErrorStatus{
     BadRequest,
     UnprocessableEntity,
     Forbidden,
     Unknown(u32),
+}
+
+impl fmt::Display for ErrorStatus {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let (code, msg) = match *self {
+            ErrorStatus::BadRequest => (STATUS_BAD_REQUEST, "Bad Request"),
+            ErrorStatus::UnprocessableEntity => (STATUS_UNPROCCESSABLE_ENTITY, "Unprocessable Entity"),
+            ErrorStatus::Forbidden => (STATUS_FORBIDDEN, "Forbidden Request"),
+            ErrorStatus::Unknown(e) => (e, "Unknown"),
+        };
+
+        write!(f, "status {}: {}", code, msg)
+    }
 }
 
 impl ErrorStatus {
@@ -60,7 +74,7 @@ impl ErrorStatus {
     }
 }
 
-#[allow(dead_code)]
+#[derive(Debug)]
 pub struct RequestError {
     pub code: ErrorStatus,
     pub errors: Vec<ErrorContext>,
@@ -68,7 +82,7 @@ pub struct RequestError {
 
 impl RequestError {
     pub fn new<T>(code: u32, buffer: &[u8]) -> Result<T, ClientError> {
-        Err(ClientError::HttpError(RequestError {
+        Err(ClientError::Http(RequestError {
             code: ErrorStatus::new(code),
             errors: match str::from_utf8(buffer) {
                 Err(..) => Vec::new(),
@@ -78,15 +92,35 @@ impl RequestError {
     }
 }
 
+impl fmt::Display for RequestError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+       write!(f, "HTTP Error: {}. Found {} error(s)!", self.code, self.errors.len())
+    }
+}
+
+#[derive(Debug)]
+pub struct InternalError {
+    pub msg: String,
+}
+
+impl InternalError {
+    pub fn new<T>(msg: &str) -> Result<T, ClientError> {
+        Err(ClientError::Internal(InternalError { msg: String::from_str(msg) }))
+    }
+}
+
+impl fmt::Display for InternalError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+       write!(f, "Internal Error: {}", self.msg)
+    }
+}
+
+#[derive(Debug)]
 pub enum ClientError {
-    HttpError(RequestError),
-    InternalError(String)
+    Http(RequestError),
+    Internal(InternalError)
 }
 
 pub fn check_status_code(code: u32) -> bool {
     code == STATUS_OK
-}
-
-pub fn get_internal_error<T>(message: &str) -> Result<T, ClientError> {
-    Err(ClientError::InternalError(String::from_str(message)))
 }

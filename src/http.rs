@@ -34,12 +34,12 @@ pub fn get<R: Decodable>(user: &str, url: &str, opts: Option<Vec<(&str, &str)>>)
                         return Ok((body, Response::populate(response.get_headers())));
                     }
                     Err(e) => {
-                        return get_internal_error(&format!("InternalError: {}", e));
+                        return InternalError::new(&format!("{}", e));
                     }
                 };
             }
             Err(e) => {
-                return get_internal_error(&format!("InternalError: {}", e));
+                return InternalError::new(&format!("{}", e));
             }
         }
     } else {

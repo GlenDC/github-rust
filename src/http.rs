@@ -38,24 +38,18 @@ pub fn get<R: Decodable>(user: &str, url: &str, opts: Option<Vec<(&str, &str)>>)
     // Decoding the header and body in a controlled fashion,
     // throwing an error in case something went wrong internally,
     // replacing a panic, or when a response was negative.
-    if check_status_code(status_code) {
-        match str::from_utf8(response.get_body()) {
-            Ok(raw_body) => {
-                match json::decode(raw_body) {
-                    Ok(b) => {
-                        let body: Vec<R> = b;
-                        return Ok((body, Response::populate(response.get_headers())));
-                    }
-                    Err(e) => {
-                        return InternalError::new(&format!("{}", e));
-                    }
-                };
-            }
-            Err(e) => {
-                return InternalError::new(&format!("{}", e));
-            }
-        }
-    } else {
+    if !check_status_code(status_code) {
         return RequestError::new(status_code, response.get_body());
+    }
+    let raw_body = match str::from_utf8(response.get_body()) {
+        Ok(raw_body) => raw_body,
+        Err(e) => return InternalError::new(&format!("{}", e)),
+    };
+    match json::decode(raw_body) {
+        Ok(b) => {
+            let body: Vec<R> = b;
+            Ok((body, Response::populate(response.get_headers())))
+        },
+        Err(e) => InternalError::new(&format!("{}", e)),
     }
 }

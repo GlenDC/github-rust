@@ -1,5 +1,6 @@
 src/
 examples/
+target/
 Cargo.*
-LICENCE
+LICENSE
 README.md

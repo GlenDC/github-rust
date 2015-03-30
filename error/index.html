@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `error` mod in crate `github`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, error">
+
+    <title>github::error - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>github</a></p><script>window.sidebarCurrent = {name: 'error', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>github</a>::<wbr><a class='mod' href=''>error</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-340' href='../../src/github/error.rs.html#1-222'>[src]</a></span></h1>
+<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.ErrorContext.html'
+                               title='github::error::ErrorContext'>ErrorContext</a></td>
+                        <td class='docblock short'><p>When a negative status was given as a response to a request,
+there might be one or several error descriptions embedded in the
+body to tell more about the details of what was wrong.
+<code>ErrorContext</code> is the representation for each of the errors that are given.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.InternalError.html'
+                               title='github::error::InternalError'>InternalError</a></td>
+                        <td class='docblock short'><p><code>InternalError</code> will be given in the form of Result<T, ClientError> in
+case something went wrong within this Client Library.
+It replaces panics so that you can freely choose the behaviour.
+Please file an issue and/or resolve the bug yourself when you get this error.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.RequestError.html'
+                               title='github::error::RequestError'>RequestError</a></td>
+                        <td class='docblock short'><p><code>RequestError</code> will be returned as a <code>Result&lt;T, ClientError&gt;</code> in case
+a request responds negatively populated by information from
+both the header and body.</p>
+</td>
+                    </tr>
+                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.ClientError.html'
+                               title='github::error::ClientError'>ClientError</a></td>
+                        <td class='docblock short'><p><code>ClientError</code> enumerates all the possible errors that a public
+client (request) function of this library might be given.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.ErrorCode.html'
+                               title='github::error::ErrorCode'>ErrorCode</a></td>
+                        <td class='docblock short'><p>Documentation References:
+<a href="https://developer.github.com/v3/#client-errors">https://developer.github.com/v3/#client-errors</a>
+<code>ErrorCode</code> represents the type of error that was reported
+as a response on a request to th Github API.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.ErrorStatus.html'
+                               title='github::error::ErrorStatus'>ErrorStatus</a></td>
+                        <td class='docblock short'><p><code>ErrorStatus</code> represents the status code given in the header of a negative response.
+Look at const definitions such as <code>STATUS_OK</code> for more information for each value.</p>
+</td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.check_status_code.html'
+                               title='github::error::check_status_code'>check_status_code</a></td>
+                        <td class='docblock short'><p>Simplistic function internally used to check
+if a returned status code is positive.
+Which means that the request was succesful.</p>
+</td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "github";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>

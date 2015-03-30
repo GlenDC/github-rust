@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Client","The `Client` struct represent the user agent and base URLs. Functions in this library will never mutate a `Client` object and for th sake of parallel processing, you should try to keep it immutable."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["get","A simplistic function that wraps around the behaviour of an http get-request as defined in `curl`. As the library gets more complete, a more complete and complex approach might be needed."]]});

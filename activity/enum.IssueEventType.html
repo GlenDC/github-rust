@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `IssueEventType` enum in crate `github`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, IssueEventType">
+
+    <title>github::activity::IssueEventType - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>github</a>::<wbr><a href='index.html'>activity</a></p><script>window.sidebarCurrent = {name: 'IssueEventType', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>github</a>::<wbr><a href='index.html'>activity</a>::<wbr><a class='enum' href=''>IssueEventType</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-2516' href='../../src/github/activity/mod.rs.html#70-108'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum IssueEventType {
+    Closed,
+    Reopened,
+    Subscribed,
+    Merged,
+    Referenced,
+    Mentioned,
+    Assigned,
+    Unassigned,
+    Labeled,
+    Unlabeled,
+    Milestoned,
+    Demilestoned,
+    Renamed,
+    Locked,
+    Unlocked,
+    HeadRefDeleted,
+    HeadRefRestored,
+    Unknown(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>),
+}</pre><div class='docblock'><p><code>IssueEventType</code> is an enumuration of
+all the different types of Issue Events.</p>
+</div><h2 class='variants'>Variants</h2>
+<table><tr><td id='variant.Closed'><a class='stability Unmarked' title='No stability level'></a><code>Closed</code></td><td><div class='docblock'><p>The issue was closed by the <code>Actor</code>.</p>
+</div></td></tr><tr><td id='variant.Reopened'><a class='stability Unmarked' title='No stability level'></a><code>Reopened</code></td><td><div class='docblock'><p>The issue was reopened by the <code>Actor</code>.</p>
+</div></td></tr><tr><td id='variant.Subscribed'><a class='stability Unmarked' title='No stability level'></a><code>Subscribed</code></td><td><div class='docblock'><p>The <code>Actor</code> subscribed to receive notifications for an issue.</p>
+</div></td></tr><tr><td id='variant.Merged'><a class='stability Unmarked' title='No stability level'></a><code>Merged</code></td><td><div class='docblock'><p>The issue was merged by the <code>Actor</code>.</p>
+</div></td></tr><tr><td id='variant.Referenced'><a class='stability Unmarked' title='No stability level'></a><code>Referenced</code></td><td><div class='docblock'><p>The issue was referenced from a commit message.</p>
+</div></td></tr><tr><td id='variant.Mentioned'><a class='stability Unmarked' title='No stability level'></a><code>Mentioned</code></td><td><div class='docblock'><p>The <code>Actor</code> was @mentioned in an issue body.</p>
+</div></td></tr><tr><td id='variant.Assigned'><a class='stability Unmarked' title='No stability level'></a><code>Assigned</code></td><td><div class='docblock'><p>The issue was assigned to the <code>Actor</code>.</p>
+</div></td></tr><tr><td id='variant.Unassigned'><a class='stability Unmarked' title='No stability level'></a><code>Unassigned</code></td><td><div class='docblock'><p>The issue was unassigned to the <code>Actor</code>.</p>
+</div></td></tr><tr><td id='variant.Labeled'><a class='stability Unmarked' title='No stability level'></a><code>Labeled</code></td><td><div class='docblock'><p>A label was added to the issue.</p>
+</div></td></tr><tr><td id='variant.Unlabeled'><a class='stability Unmarked' title='No stability level'></a><code>Unlabeled</code></td><td><div class='docblock'><p>A label was removed from the issue.</p>
+</div></td></tr><tr><td id='variant.Milestoned'><a class='stability Unmarked' title='No stability level'></a><code>Milestoned</code></td><td><div class='docblock'><p>The issue was added to a milestone.</p>
+</div></td></tr><tr><td id='variant.Demilestoned'><a class='stability Unmarked' title='No stability level'></a><code>Demilestoned</code></td><td><div class='docblock'><p>The issue was removed from a milestone.</p>
+</div></td></tr><tr><td id='variant.Renamed'><a class='stability Unmarked' title='No stability level'></a><code>Renamed</code></td><td><div class='docblock'><p>The issue title was changed.</p>
+</div></td></tr><tr><td id='variant.Locked'><a class='stability Unmarked' title='No stability level'></a><code>Locked</code></td><td><div class='docblock'><p>The issue was locked by the <code>Actor</code>.</p>
+</div></td></tr><tr><td id='variant.Unlocked'><a class='stability Unmarked' title='No stability level'></a><code>Unlocked</code></td><td><div class='docblock'><p>The issue was unlocked by the <code>Actor</code>.</p>
+</div></td></tr><tr><td id='variant.HeadRefDeleted'><a class='stability Unmarked' title='No stability level'></a><code>HeadRefDeleted</code></td><td><div class='docblock'><p>The pull request’s branch was deleted.</p>
+</div></td></tr><tr><td id='variant.HeadRefRestored'><a class='stability Unmarked' title='No stability level'></a><code>HeadRefRestored</code></td><td><div class='docblock'><p>The pull request’s branch was restored.</p>
+</div></td></tr><tr><td id='variant.Unknown'><a class='stability Unmarked' title='No stability level'></a><code>Unknown</code></td><td><div class='docblock'><p><code>Unknown(String)</code> is used as a last resort when an event is unknown.
+This should never happen, please report/resolve the issue when it does happen.</p>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='enum' href='../../github/activity/enum.IssueEventType.html' title='github::activity::IssueEventType'>IssueEventType</a></code></h3><div class='docblock'><p>Allowing <code>IssueEventType</code> to be printed via <code>{}</code>.</p>
+</div><div class='impl-items'><h4 id='method.fmt' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a> for <a class='enum' href='../../github/activity/enum.IssueEventType.html' title='github::activity::IssueEventType'>IssueEventType</a></code></h3><div class='docblock'><p>Allowing <code>IssueEventType</code> to be decoded from json values.
+Linked to the <code>event</code> key to the <code>IssueEventType</code> enumeration.</p>
+</div><div class='impl-items'><h4 id='method.decode' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.decode' class='fnname'>decode</a>&lt;D: <a class='trait' href='../../rustc_serialize/serialize/trait.Decoder.html' title='rustc_serialize::serialize::Decoder'>Decoder</a>&gt;(d: &amp;mut D) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../github/activity/enum.IssueEventType.html' title='github::activity::IssueEventType'>IssueEventType</a>, Error&gt;</code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../github/activity/enum.IssueEventType.html' title='github::activity::IssueEventType'>IssueEventType</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "github";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>

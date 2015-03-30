@@ -2,6 +2,10 @@
 
 A Rust library to communicate with GitHub via the official v3 REST API.
 
+## [Documentation](http://glendc.github.io/github-rust/github/index.html)
+
+You can find the automaticly generated docs for the last published version [here](http://glendc.github.io/github-rust/github/index.html).
+
 ## Issues
 
 Feel free to submit issues and enhancement requests.

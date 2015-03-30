@@ -15,6 +15,7 @@ Feel free to submit issues and enhancement requests.
 I follow the _fork-and-pull_ git workflow for code contributions:
 
 1. Fork the repo on GitHub
+1. Warn me by mail or by corresponding on the relevant issue to indicate what you're working on
 1. Commit changes to a branch in your fork
 1. Make sure to pull the latest changes (rebase when possible) if not done yet!
   1. If you have conflicts, you should merge them, but try to prevent where possible!

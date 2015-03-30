@@ -1,7 +1,7 @@
 [package]
 
 name = "github"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Rust GitHub v3 API client."
 readme = "README.md"
 documentation = "http://glendc.github.io/github-rust/github/index.html"

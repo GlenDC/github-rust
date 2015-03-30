@@ -15,6 +15,7 @@ pub trait Populatable {
 
 /// `Rate` represents the X-Rate-Limit data
 /// provided by the Github v3 API and provided for each response
+#[derive(Debug)]
 pub struct Rate {
     /// the maximum limit of requests
     pub limit: u32,
@@ -26,6 +27,7 @@ pub struct Rate {
 }
 
 /// `Page` represents a link related to the response
+#[derive(Debug)]
 pub struct Page {
     /// the actual page number
     pub number: u64,
@@ -35,6 +37,7 @@ pub struct Page {
 
 /// `Response` represents the exposed data given with each
 /// request and populated by the Github v3 API
+#[derive(Debug)]
 pub struct Response {
     /// the raw response header
     pub resp: HttpHeaderType,

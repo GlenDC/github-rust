@@ -54,7 +54,7 @@ impl Decodable for ErrorCode {
                 "missing_field" => ErrorCode::MissingField,
                 "invalid" => ErrorCode::Invalid,
                 "already_exists" => ErrorCode::AlreadyExists,
-                unknown => ErrorCode::Unknown(String::from_str(unknown))
+                unknown => ErrorCode::Unknown(String::from_str(unknown)),
             }),
             Err(err) => Err(err),
         }
@@ -67,6 +67,9 @@ const STATUS_OK: u32 = 200;
 const STATUS_BAD_REQUEST: u32 = 400;
 /// Given as a response to requests the user has insufficient permissions for.
 const STATUS_FORBIDDEN: u32 = 403;
+/// Given when the info requested is not found because it
+/// either doesn't exist or because you are not authorized.
+const STATUS_NOT_FOUND: u32 = 404;
 /// Given when a field or resource couldn't be processed properly.
 const STATUS_UNPROCCESSABLE_ENTITY: u32 = 422;
 
@@ -95,6 +98,7 @@ pub enum ErrorStatus{
     BadRequest,
     UnprocessableEntity,
     Forbidden,
+    NotFound,
     Unknown(u32),
 }
 
@@ -105,6 +109,7 @@ impl fmt::Display for ErrorStatus {
             ErrorStatus::BadRequest => (STATUS_BAD_REQUEST, "Bad Request"),
             ErrorStatus::UnprocessableEntity => (STATUS_UNPROCCESSABLE_ENTITY, "Unprocessable Entity"),
             ErrorStatus::Forbidden => (STATUS_FORBIDDEN, "Forbidden Request"),
+            ErrorStatus::NotFound => (STATUS_NOT_FOUND, "Not Found"),
             ErrorStatus::Unknown(e) => (e, "Unknown"),
         };
 
@@ -120,6 +125,7 @@ impl ErrorStatus {
             STATUS_BAD_REQUEST => ErrorStatus::BadRequest,
             STATUS_FORBIDDEN => ErrorStatus::Forbidden,
             STATUS_UNPROCCESSABLE_ENTITY => ErrorStatus::UnprocessableEntity,
+            STATUS_NOT_FOUND => ErrorStatus::NotFound,
             unknown => ErrorStatus::Unknown(unknown),
         }
     }

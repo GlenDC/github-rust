@@ -32,13 +32,13 @@ pub enum ErrorCode {
 /// Allowing `ErrorCode` to be printed via `{}`.
 impl fmt::Display for ErrorCode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let msg: String = String::from_str(match *self {
+        let msg: &str = match *self {
             ErrorCode::Missing => "resource does not exist",
             ErrorCode::MissingField => "required field on the resource has not been set",
             ErrorCode::Invalid => "the formatting of the field is invalid",
             ErrorCode::AlreadyExists => "another resource has the same value as this field",
             ErrorCode::Unknown(ref s) => &s,
-        });
+        };
 
         write!(f, "{}", msg)
     }
@@ -54,7 +54,7 @@ impl Decodable for ErrorCode {
                 "missing_field" => ErrorCode::MissingField,
                 "invalid" => ErrorCode::Invalid,
                 "already_exists" => ErrorCode::AlreadyExists,
-                unknown => ErrorCode::Unknown(String::from_str(unknown)),
+                unknown => ErrorCode::Unknown(unknown.to_string()),
             }),
             Err(err) => Err(err),
         }
@@ -181,7 +181,7 @@ impl InternalError {
     /// Simple way to construct a `Result<T, ClientError>` based on
     /// information known for an internal error.
     pub fn new<T>(msg: &str) -> Result<T, ClientError> {
-        Err(ClientError::Internal(InternalError { msg: String::from_str(msg) }))
+        Err(ClientError::Internal(InternalError { msg: msg.to_string() }))
     }
 }
 

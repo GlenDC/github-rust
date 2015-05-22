@@ -23,9 +23,9 @@ impl Client {
     /// Construct a `Client` for a custom domain, other than GitHub.
     pub fn custom(user: &str, base_url: &str, upload_url: &str) -> Client {
         Client {
-            user_agent: String::from_str(user),
-            base_url: String::from_str(base_url),
-            upload_url: String::from_str(upload_url),
+            user_agent: user.to_string(),
+            base_url: base_url.to_string(),
+            upload_url: upload_url.to_string(),
         }
     }
 

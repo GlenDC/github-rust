@@ -49,7 +49,7 @@ pub struct Response {
     pub first: Option<Page>,
     /// the immediate previous page of results
     pub prev: Option<Page>,
-    /// the latest X-Rate-Limit info 
+    /// the latest X-Rate-Limit info
     pub rate: Rate,
 }
 
@@ -68,7 +68,7 @@ impl Populatable for Rate {
         Rate {
             limit: get_single_header_value(raw_header, "x-ratelimit-limit"),
             remaining: get_single_header_value(raw_header, "x-ratelimit-remaining"),
-            reset: String::from_str(&raw_header["x-ratelimit-reset"][0]),
+            reset: raw_header["x-ratelimit-reset"][0].clone(),
         }
     }
 }

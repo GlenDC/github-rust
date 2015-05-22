@@ -1,5 +1,3 @@
-#![feature(collections)]
-
 extern crate curl;
 extern crate chrono;
 extern crate rustc_serialize;

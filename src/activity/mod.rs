@@ -110,7 +110,7 @@ pub enum IssueEventType {
 /// Allowing `IssueEventType` to be printed via `{}`.
 impl fmt::Display for IssueEventType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let msg: String = String::from_str(match *self {
+        let msg: &str = match *self {
             IssueEventType::Closed => "closed",
             IssueEventType::Reopened => "reopened",
             IssueEventType::Subscribed => "subscribed",
@@ -129,7 +129,7 @@ impl fmt::Display for IssueEventType {
             IssueEventType::HeadRefDeleted => "head reference deleted",
             IssueEventType::HeadRefRestored => "head reference restored",
             IssueEventType::Unknown(ref s) => &s,
-        });
+        };
 
         write!(f, "{}", msg)
     }
@@ -158,7 +158,7 @@ impl Decodable for IssueEventType {
                 "unlocked" => IssueEventType::Unlocked,
                 "head_ref_deleted" => IssueEventType::HeadRefDeleted,
                 "head_ref_restored" => IssueEventType::HeadRefRestored,
-                unknown => IssueEventType::Unknown(String::from_str(unknown)),
+                unknown => IssueEventType::Unknown(unknown.to_string()),
             }),
             Err(err) => Err(err),
         }
@@ -179,7 +179,7 @@ pub struct IssueEventResponse {
     pub id: String,
 }
 
-/// `EventReturnType` is the return type for most event-requests. 
+/// `EventReturnType` is the return type for most event-requests.
 pub type EventReturnType = Result<(Vec<EventResponse>, Response), ClientError>;
 /// `EventReturnType` is the return type for issue-event-requests.
 pub type IssueEventReturnType = Result<(Vec<IssueEventResponse>, Response), ClientError>;
